@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "fac81b73-28a5-49ee-b0f9-73eb9ca205f2",
+		"name": "Reqres",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get_ListUsers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bbd2438c-1597-4022-abcc-ded0a449f6ed",
+						"exec": [
+							"postman.setNextRequest(\"Create_User\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "e99e905e-a247-417c-a0cc-7c6bc30ae7cd",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}users?page=2",
+					"host": [
+						"{{URL}}users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create_User",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "09f42d9e-5059-457a-b9e5-828e61ed91cd",
+						"exec": [
+							"\r",
+							"//pm.environment.set(\"FirstName\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+							"//pm.environment.set(\"JobTitle\", pm.variables.replaceIn('{{$randomJobTitle}}'));\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "0210384c-00fd-4ef8-96d9-495461962aea",
+						"exec": [
+							" var jsonData = pm.response.json();\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+							"});\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});\r",
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+							"});\r",
+							"//pm.test(\"Name\", function () {\r",
+							"   \r",
+							"  //  pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
+							"\r",
+							"//});\r",
+							"\r",
+							"//pm.globals.set(\"ID\", jsonData.id);\r",
+							"pm.environment.set(\"ID\", jsonData.id);\r",
+							"\r",
+							"postman.setNextRequest(\"Update_User\");\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "af928390-a15a-4e79-aa94-d24d19278a59",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"name\",\r\n    \"job\": \"job title\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{URL}}users"
+			},
+			"response": []
+		},
+		{
+			"name": "Update_User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4f888930-f490-446a-bfb9-637b1ae2b684",
+						"exec": [
+							"postman.setNextRequest(\"Delete_User\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "796e2129-af2b-4992-9878-4c4edf358a7a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Apeksha\",\r\n    \"job\": \"QA Lead\"\r\n     \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{URL}}users/{{ID}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete_User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a61cc7b5-ebd7-424c-8838-a2b3590c1127",
+						"exec": [
+							"postman.setNextRequest(null);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "d210f63e-2607-46a9-a48f-ee4f33595b35",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "{{URL}}users/{{ID}}"
+			},
+			"response": []
+		}
+	]
+}
