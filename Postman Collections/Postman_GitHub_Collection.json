@@ -27,14 +27,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{URL}}users?page=2",
+					"raw": "{{URL}}users?page=",
 					"host": [
 						"{{URL}}users"
 					],
 					"query": [
 						{
 							"key": "page",
-							"value": "2"
+							"value": ""
 						}
 					]
 				}
